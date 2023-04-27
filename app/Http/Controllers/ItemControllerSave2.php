@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreItemRequest;
-use App\Http\Requests\UpdateItemRequest;
 use App\Models\Item;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ItemController extends Controller
 {
@@ -14,7 +14,7 @@ class ItemController extends Controller
     public function index()
     {
         return view("inventory.index", [
-            "items" => Item::paginate(7)
+            "items" => Item::all()
         ]);
     }
 
@@ -29,8 +29,13 @@ class ItemController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreItemRequest $request)
+    public function store(Request $request)
     {
+        $request->validate([
+            "name" => "required|min:3|max:50|unique:items,name",
+            "price" => "required|numeric|gte:50",
+            "stock" => "required|numeric|gt:3"
+        ]);
 
         $item = new Item();
         $item->name = $request->name;
@@ -56,15 +61,20 @@ class ItemController extends Controller
     public function edit(Item $item)
     {
         return view('inventory.edit', compact('item'));
-
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateItemRequest $request, Item $item)
+    public function update(Request $request, Item $item)
     {
-        //
+
+        $item->name = $request->name;
+        $item->price = $request->price;
+        $item->stock = $request->stock;
+        $item->update();
+
+        return redirect()->route("item.index");
     }
 
     /**

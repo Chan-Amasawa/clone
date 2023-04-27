@@ -50,4 +50,6 @@
         </tbody>
     </table>
 
+    {{ $items->onEachSide(1)->links() }}
+
 @endsection
