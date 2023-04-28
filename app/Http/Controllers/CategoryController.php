@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
@@ -28,6 +29,16 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+
+        $validators = Validator::make($request->all(),[
+            "title" => "required",
+            "description" => "required"
+        ]);
+
+        if($validators->fails()){
+            return redirect()->back()->withErrors($validators);
+        }
+
         $category = new Category();
         $category->title = $request->title;
         $category->description = $request->description;

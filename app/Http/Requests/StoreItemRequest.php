@@ -27,4 +27,12 @@ class StoreItemRequest extends FormRequest
             "stock" => "required|numeric|gt:3"
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            "name.required" => "နာမည်ထည့်လေးကွာ ...",
+            "name.min" => "နာမည်က ၃လုံးလောက်တော့ ထည့်ပါ ..."
+        ];
+    }
 }

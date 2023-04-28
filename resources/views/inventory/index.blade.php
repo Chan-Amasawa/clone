@@ -1,12 +1,17 @@
-@extends("layouts.master")
+@extends('layouts.master')
 
 @section('title')
     Item List
 @endsection
 
 @section('content')
-
     <h4>Item List</h4>
+
+    @if (session('status'))
+        <div class=" alert alert-success">
+            {{ session('status') }}
+        </div>
+    @endif
 
     <table class=" table">
         <thead>
@@ -26,18 +31,18 @@
                     <td>{{ $item->price }}</td>
                     <td>{{ $item->stock }}</td>
                     <td>
-                        <a class=" btn btn-sm btn-outline-primary" href="{{ route("item.show",$item->id) }}">
+                        <a class=" btn btn-sm btn-outline-primary" href="{{ route('item.show', $item->id) }}">
                             Detail
                         </a>
-                        <a href="{{ route("item.edit",$item->id) }}" class="btn btn-sm btn-outline-warning">Edit</a>
-                        <form class=" d-inline-block" action="{{ route("item.destroy",$item->id) }}" method="post">
-                            @method("delete")
+                        <a href="{{ route('item.edit', $item->id) }}" class="btn btn-sm btn-outline-warning">Edit</a>
+                        <form class=" d-inline-block" action="{{ route('item.destroy', $item->id) }}" method="post">
+                            @method('delete')
                             @csrf
                             <button class=" btn btn-sm btn-outline-danger">Delete</button>
                         </form>
                     </td>
                 </tr>
-                @empty
+            @empty
                 <tr>
                     <td colspan="5" class=" text-center">
                         <p>
@@ -51,5 +56,4 @@
     </table>
 
     {{ $items->onEachSide(1)->links() }}
-
 @endsection
