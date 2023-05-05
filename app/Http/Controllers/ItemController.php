@@ -60,7 +60,12 @@ class ItemController extends Controller
             $query->where("name","like","%".$keyword."%");
             $query->orWhere("price","like","%".$keyword."%");
             $query->orWhere("stock","like","%".$keyword."%");
-        })->paginate(7)->withQueryString();
+        })
+        ->when(request()->has('name'),function($query){
+            $sortType = request()->name ?? 'asc';
+            $query->orderBy("name",$sortType);
+        })
+        ->paginate(7)->withQueryString();
 
         return view("inventory.index", compact('items'));
     }

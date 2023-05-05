@@ -40,7 +40,12 @@
         <thead>
             <tr>
                 <td>#</td>
-                <td>Name</td>
+                <td>
+                    Name
+                    <a class=" btn btn-sm btn-outline-primary" href="{{ route('item.index') }}?name=asc">ASC</a>
+                    <a class=" btn btn-sm btn-outline-primary" href="{{ route('item.index') }}?name=desc">DESC</a>
+                    <a class=" btn btn-sm btn-outline-primary" href="{{ route('item.index') }}">Clear</a>
+                </td>
                 <td>Price</td>
                 <td>Stock</td>
                 <td>Control</td>
