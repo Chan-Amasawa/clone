@@ -5,7 +5,12 @@
 @endsection
 
 @section('content')
-    <h4>Item List</h4>
+    <h4>
+        Item List
+        @if (request()->has('keyword'))
+            [ Search result by '{{ request()->keyword }}' ]
+        @endif
+    </h4>
 
     @if (session('status'))
         <div class=" alert alert-success">
@@ -18,9 +23,13 @@
             <a href="{{ route('item.create') }}" class="btn btn-outline-primary">Create</a>
         </div>
         <div class="col-md-5">
-            <form action="{{ route("item.index") }}" method="get">
+            <form action="{{ route('item.index') }}" method="get">
                 <div class=" input-group ">
-                    <input type="text" class=" form-control" name="keyword">
+                    <input type="text" class=" form-control" name="keyword"
+                        @if (request()->has('keyword')) value="{{ request()->keyword }}" @endif>
+                    @if (request()->has('keyword'))
+                        <a href="{{ route("item.index") }}" class="btn btn-danger">Clear</a>
+                    @endif
                     <button class=" btn btn-primary">Search</button>
                 </div>
             </form>
