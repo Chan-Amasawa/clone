@@ -13,6 +13,20 @@
         </div>
     @endif
 
+    <div class="row justify-content-between mb-3">
+        <div class="col-md-3">
+            <a href="{{ route('item.create') }}" class="btn btn-outline-primary">Create</a>
+        </div>
+        <div class="col-md-5">
+            <form action="{{ route("item.index") }}" method="get">
+                <div class=" input-group ">
+                    <input type="text" class=" form-control" name="keyword">
+                    <button class=" btn btn-primary">Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <table class=" table">
         <thead>
             <tr>

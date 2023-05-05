@@ -22,7 +22,7 @@ class ItemController extends Controller
         // $items = Item::whereIn("id",[10,15,17,27])->get();
         // $items = Item::whereBetween("price",[700,900]);
 
-        $items = DB::table("items")->where("id",">",5)->dump();
+        // $items = DB::table("items")->where("id",">",5)->dump();
 
         // $items = Item::when(false,function($query){
         //     $query->where("id",5);
@@ -35,10 +35,11 @@ class ItemController extends Controller
 
         // $items = Item::where("id",">",100)->first();
         // $items = Item::find(10);
+        // $items = Item::paginate(7);
 
 
         // return $items;
-        dd($items);
+        // dd($items);
 
         // return collect($items->first())->values()->all();
 
@@ -52,9 +53,16 @@ class ItemController extends Controller
 
         // dd($newItems);
 
-        // return view("inventory.index", [
-        //     "items" => Item::paginate(7)
-        // ]);
+
+
+        $items = Item::when(request()->has("keyword"),function($query){
+            $keyword = request()->keyword;
+            $query->where("name","like","%".$keyword."%");
+            $query->orWhere("price","like","%".$keyword."%");
+            $query->orWhere("stock","like","%".$keyword."%");
+        })->paginate(7)->withQueryString();
+
+        return view("inventory.index", compact('items'));
     }
 
     /**
