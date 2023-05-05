@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreItemRequest;
 use App\Http\Requests\UpdateItemRequest;
 use App\Models\Item;
+use Illuminate\Support\Facades\DB;
 
 class ItemController extends Controller
 {
@@ -13,9 +14,47 @@ class ItemController extends Controller
      */
     public function index()
     {
-        return view("inventory.index", [
-            "items" => Item::paginate(7)
-        ]);
+
+        // $items = Item::where("id", ">", 50)->where("price",">",700)->get();
+        // $items = Item::where("price",">",900)
+        // ->orWhere("stock","<",10)
+        // ->get();
+        // $items = Item::whereIn("id",[10,15,17,27])->get();
+        // $items = Item::whereBetween("price",[700,900]);
+
+        $items = DB::table("items")->where("id",">",5)->dump();
+
+        // $items = Item::when(false,function($query){
+        //     $query->where("id",5);
+        // })->get();
+
+        // $items = Item::
+        // // ->orderBy("id","desc")
+        // latest("id")
+        // ->get();
+
+        // $items = Item::where("id",">",100)->first();
+        // $items = Item::find(10);
+
+
+        // return $items;
+        dd($items);
+
+        // return collect($items->first())->values()->all();
+
+        // dd($items->filter(fn($item)=> $item->price > 900 ));
+
+        // $newItems = $items->map(function($item){
+        //     $item->price += 50;
+        //     $item->stock -=10;
+        //     return $item;
+        // });
+
+        // dd($newItems);
+
+        // return view("inventory.index", [
+        //     "items" => Item::paginate(7)
+        // ]);
     }
 
     /**
@@ -38,7 +77,7 @@ class ItemController extends Controller
         $item->stock = $request->stock;
 
         $item->save();
-        return redirect()->route("item.index")->with("status","New Item Created");
+        return redirect()->route("item.index")->with("status", "New Item Created");
     }
 
     /**
@@ -47,7 +86,6 @@ class ItemController extends Controller
     public function show(Item $item)
     {
         return view('inventory.show', compact('item'));
-
     }
 
     /**
@@ -56,7 +94,6 @@ class ItemController extends Controller
     public function edit(Item $item)
     {
         return view('inventory.edit', compact('item'));
-
     }
 
     /**
@@ -69,7 +106,7 @@ class ItemController extends Controller
         $item->stock = $request->stock;
         $item->update();
 
-        return redirect()->route("item.index")->with("status","Item Update successful");
+        return redirect()->route("item.index")->with("status", "Item Update successful");
     }
 
     /**
@@ -78,6 +115,6 @@ class ItemController extends Controller
     public function destroy(Item $item)
     {
         $item->delete();
-        return redirect()->back()->with("status","Item Deleted");
+        return redirect()->back()->with("status", "Item Deleted");
     }
 }
