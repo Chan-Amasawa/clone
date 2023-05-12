@@ -9,6 +9,13 @@ use Illuminate\Support\Facades\Validator;
 
 class ItemApiController extends Controller
 {
+
+    public function __construct()
+    {
+        // $this->middleware('cat')->only(["store","delete","index","show"]);
+        // $this->middleware("cat")->except("index");
+        $this->middleware("cat");
+    }
     /**
      * Display a listing of the resource.
      */
