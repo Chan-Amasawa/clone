@@ -14,6 +14,9 @@ class ItemApiController extends Controller
      */
     public function index()
     {
+
+
+
         $items = Item::when(request()->has("keyword"), function ($query) {
             $keyword = request()->keyword;
             $query->where("name", "like", "%" . $keyword . "%");
@@ -58,7 +61,7 @@ class ItemApiController extends Controller
             "price" => $request->price,
             "stock" => $request->stock,
         ]);
-        return response()->json($item);
+        return new ItemResource($item);
     }
 
     /**
@@ -101,7 +104,7 @@ class ItemApiController extends Controller
             "price" => $request->price,
             "stock" => $request->stock,
         ]);
-        return response()->json($item);
+        return new ItemResource($item);
     }
 
     /**
