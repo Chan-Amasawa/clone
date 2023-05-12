@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ItemResource;
 use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -25,7 +26,8 @@ class ItemApiController extends Controller
             })
             ->paginate(7)->withQueryString();
 
-        return response()->json($items);
+        // return response()->json($items);
+        return ItemResource::collection($items);
     }
 
     /**
@@ -68,7 +70,8 @@ class ItemApiController extends Controller
         if (is_null($item)) {
             return response()->json(["message" => "not found"], 404);
         }
-        return response()->json($item);
+        // return response()->json($item);
+        return new ItemResource($item);
     }
 
     /**
