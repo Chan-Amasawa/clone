@@ -22,10 +22,16 @@ class AuthController extends Controller
             "password_confirmation" => "same:password"
         ]);
 
+        $verify_code = rand(100000,999999);
+
+        //mailing step
+        logger("Your verify code is ".$verify_code);
+
         $student = new Student();
         $student->name = $request->name;
         $student->email = $request->email;
         $student->password = Hash::make($request->password);
+        $student->verify_code = $verify_code;
         $student->save();
 
         return redirect()->route("auth.login")->with("message","Register successful");
