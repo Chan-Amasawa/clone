@@ -10,7 +10,7 @@
 
     <hr>
 
-    <form action="{{ route("auth.check") }}" method="post">
+    <form action="{{ route("auth.passwordChanging") }}" method="post">
 
         @csrf
 
