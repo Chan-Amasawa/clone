@@ -60,4 +60,16 @@ class AuthController extends Controller
         session()->forget("auth");
         return redirect()->route("auth.login");
     }
+
+    public function passwordChange()
+    {
+
+        return view("auth.change-password");
+
+    }
+
+    public function passwordChanging()
+    {
+
+    }
 }
