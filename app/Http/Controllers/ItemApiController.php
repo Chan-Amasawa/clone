@@ -14,7 +14,7 @@ class ItemApiController extends Controller
     {
         // $this->middleware('cat')->only(["store","delete","index","show"]);
         // $this->middleware("cat")->except("index");
-        $this->middleware("cat");
+        // $this->middleware("cat");
     }
     /**
      * Display a listing of the resource.
