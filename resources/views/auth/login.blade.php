@@ -38,6 +38,7 @@
 
         <div class="mb-3">
             <button class=" btn btn-primary">Login </button>
+            <a href="{{ route('auth.forgot') }}" class=" btn btn-link">Forgot Password</a>
         </div>
 
 
